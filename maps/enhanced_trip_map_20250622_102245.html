@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_d1c70f3f4a5ad8fed4f51af0c7f70592 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.1.2/dist/leaflet-ant-path.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.66.2/L.Control.Locate.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.66.2/L.Control.Locate.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.css"/>
+</head>
+<body>
+    
+    
+        <div id="info-panel" style="position: fixed; 
+                    top: 60px; left: 10px; width: 280px; 
+                    background: rgba(255,255,255,0.95); 
+                    border: 2px solid #ddd; 
+                    border-radius: 12px;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+                    font-family: 'Segoe UI', Arial; 
+                    font-size: 13px; 
+                    z-index: 1000;
+                    backdrop-filter: blur(10px);">
+            
+            <!-- Header -->
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                        color: white; padding: 12px; 
+                        border-radius: 10px 10px 0 0; 
+                        text-align: center;">
+                <h3 style="margin: 0; font-size: 16px;">🚗 معلومات الرحلة</h3>
+            </div>
+            
+            <!-- Content -->
+            <div style="padding: 12px;">
+                <!-- Driver Info -->
+                <div style="background: #f8f9fa; padding: 8px; border-radius: 6px; margin-bottom: 8px;">
+                    <p style="margin: 0; font-weight: bold; color: #333;">👨‍💼 ابو ثائر</p>
+                    <p style="margin: 2px 0; font-size: 12px;">🚘 عادية | ⭐ 4.8/5</p>
+                </div>
+                
+                <!-- Distance & Time -->
+                <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                    <div style="flex: 1; background: #e3f2fd; padding: 6px; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 18px; font-weight: bold; color: #1976d2;">153م</div>
+                        <div style="font-size: 10px; color: #666;">المسافة</div>
+                    </div>
+                    <div style="flex: 1; background: #e8f5e8; padding: 6px; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 18px; font-weight: bold; color: #2e7d32;">0.8د</div>
+                        <div style="font-size: 10px; color: #666;">الوصول</div>
+                    </div>
+                </div>
+                
+                <!-- Trip Details -->
+                <div style="background: #fff3e0; padding: 8px; border-radius: 6px; margin-bottom: 8px;">
+                    <div style="display:flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 12px; color: #666;">🛣️ مسافة الرحلة:</span>
+                        <span style="font-weight: bold; color: #f57c00;">10.3 كم</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                        <span style="font-size: 12px; color: #666;">💰 التكلفة المتوقعة:</span>
+                        <span style="font-weight: bold; color: #f57c00;">9.76 د.أ</span>
+                    </div>
+                </div>
+                
+                <!-- Weather -->
+                <div style="background: #f3e5f5; padding: 8px; border-radius: 6px; margin-bottom: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 12px; color: #666;">🌤️ الطقس الحالي:</span>
+                        <span style="font-weight: bold; color: #7b1fa2;">مطر خفيف 🌧️ 22°C</span>
+                    </div>
+                </div>
+                
+                <!-- Status -->
+                <div style="text-align: center; background: linear-gradient(135deg, #4caf50, #388e3c); 
+                           color: white; padding: 8px; border-radius: 6px; margin-bottom: 8px;">
+                    <span style="font-weight: bold; font-size: 12px;">🟢 في الطريق إليك</span>
+                </div>
+                
+                <!-- Current Time -->
+                <div style="text-align: center; color: #666; font-size: 11px; margin-top: 4px;">
+                    ⏰ آخر تحديث: 10:22:44
+                </div>
+            </div>
+        </div>
+        
+        <!-- Toggle Button -->
+        <button onclick="toggleInfoPanel()" 
+                style="position: fixed; top: 15px; left: 300px; 
+                       background: #667eea; color: white; border: none; 
+                       border-radius: 50%; width: 35px; height: 35px; 
+                       cursor: pointer; z-index: 1001; font-size: 16px;
+                       box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+            ◀
+        </button>
+        
+        <script>
+        function toggleInfoPanel() {
+            var panel = document.getElementById('info-panel');
+            var button = document.querySelector('button[onclick="toggleInfoPanel()"]');
+            if (panel.style.display === 'none') {
+                panel.style.display = 'block';
+                button.innerHTML = '◀';
+                button.style.left = '300px';
+            } else {
+                panel.style.display = 'none';
+                button.innerHTML = '▶';
+                button.style.left = '10px';
+            }
+        }
+        </script>
+        
+    
+        <div style="position: fixed; 
+                    top: 120px; right: 10px; width: 200px; 
+                    background: rgba(255,255,255,0.95); 
+                    border: 2px solid #ddd; 
+                    border-radius: 12px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                    font-family: 'Segoe UI', Arial; 
+                    font-size: 12px; 
+                    z-index: 1000;
+                    backdrop-filter: blur(5px);">
+            
+            <div style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); 
+                        color: white; padding: 10px; 
+                        border-radius: 10px 10px 0 0; 
+                        text-align: center;">
+                <h4 style="margin: 0; font-size: 14px;">🗺️ دليل الخريطة</h4>
+            </div>
+            
+            <div style="padding: 10px;">
+                <div style="display: flex; align-items: center; margin: 6px 0;">
+                    <i class="fa fa-user" style="color: #2196F3; width: 16px; font-size: 14px;"></i>
+                    <span style="margin-left: 8px; font-size: 11px;">انس</span>
+                </div>
+                
+                <div style="display: flex; align-items: center; margin: 6px 0;">
+                    <i class="fa fa-car" style="color: green; width: 16px; font-size: 14px;"></i>
+                    <span style="margin-left: 8px; font-size: 11px;">ابو ثائر (عادية)</span>
+                </div>
+                
+                <div style="display: flex; align-items: center; margin: 6px 0;">
+                    <i class="fa fa-flag-checkered" style="color: #F44336; width: 16px; font-size: 14px;"></i>
+                    <span style="margin-left: 8px; font-size: 11px;">الوجهة</span>
+                </div>
+                
+                <hr style="margin: 8px 0; border: 1px solid #eee;">
+                
+                <div style="margin: 4px 0;">
+                    <span style="color: #FF6600; font-weight: bold;">━━━</span>
+                    <span style="font-size: 10px; margin-left: 4px;">مسار السائق</span>
+                </div>
+                
+                <div style="margin: 4px 0;">
+                    <span style="color: #9C27B0; font-weight: bold;">━━━</span>
+                    <span style="font-size: 10px; margin-left: 4px;">مسار الرحلة</span>
+                </div>
+                
+                <div style="margin: 4px 0;">
+                    <span style="color: #2196F3; font-size: 14px;">●</span>
+                    <span style="font-size: 10px; margin-left: 4px;">منطقة الانتظار</span>
+                </div>
+            </div>
+        </div>
+        
+    
+        <div style="position: fixed; 
+                    bottom: 20px; left: 50%; transform: translateX(-50%); 
+                    background: rgba(76, 175, 80, 0.95); 
+                    color: white; 
+                    padding: 12px 20px; 
+                    border-radius: 25px;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+                    font-family: 'Segoe UI', Arial; 
+                    font-size: 14px; 
+                    z-index: 1000;
+                    backdrop-filter: blur(10px);
+                    animation: pulse 2s infinite;">
+            
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="width: 10px; height: 10px; background: #fff; border-radius: 50%; 
+                           animation: blink 1s infinite;"></div>
+                <span style="font-weight: bold;">
+                    🚗 ابو ثائر في الطريق - سيصل خلال 0.8 دقائق
+                </span>
+            </div>
+        </div>
+        
+        <style>
+        @keyframes pulse {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.02); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+        </style>
+        
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+    
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="JeenyAgent - Smart Transportation Mapping">
+        <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .leaflet-container {
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .leaflet-popup-content {
+            margin: 0 !important;
+        }
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        </style>
+        
+    
+            <div class="folium-map" id="map_d1c70f3f4a5ad8fed4f51af0c7f70592" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_d1c70f3f4a5ad8fed4f51af0c7f70592 = L.map(
+                "map_d1c70f3f4a5ad8fed4f51af0c7f70592",
+                {
+                    center: [32.585348198967814, 35.85956845110667],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": true,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_d1c70f3f4a5ad8fed4f51af0c7f70592);
+
+            
+
+        
+    
+            var tile_layer_9084920513a6ce6ef0e01142390dd1a6 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_9084920513a6ce6ef0e01142390dd1a6.addTo(map_d1c70f3f4a5ad8fed4f51af0c7f70592);
+        
+    
+            var tile_layer_f1791c81610392f170e4e885eba4753f = L.tileLayer(
+                "https://mt1.google.com/vt/lyrs=s\u0026x={x}\u0026y={y}\u0026z={z}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Google Satellite",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_f1791c81610392f170e4e885eba4753f.addTo(map_d1c70f3f4a5ad8fed4f51af0c7f70592);
+        
+    
+            var tile_layer_d4ad046e5c0a425833aa08ffac9d88eb = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Esri World Terrain",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_d4ad046e5c0a425833aa08ffac9d88eb.addTo(map_d1c70f3f4a5ad8fed4f51af0c7f70592);
+        
+    
+            var tile_layer_86669c0b655bf36babc17c7fb5427fad = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_86669c0b655bf36babc17c7fb5427fad.addTo(map_d1c70f3f4a5ad8fed4f51af0c7f70592);
+        
+    
+            var marker_3c52e583b887f082d9d5e308f7cc31b0 = L.marker(
+                [32.5568095, 35.846887],
+                {
+}
+            ).addTo(map_d1c70f3f4a5ad8fed4f51af0c7f70592);
+        
+    
+            var icon_f43896b5bca1f63ad04449388bfa8fb1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "user",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b273525822c184555423169de4c9090f = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_1806f8dcdaa84b3463187967a90613a3 = $(`<div id="html_1806f8dcdaa84b3463187967a90613a3" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial; font-size: 13px; width: 300px;">             <div style="background: linear-gradient(135deg, #2196F3, #1976D2); color: white; padding: 12px; margin: -9px -9px 10px -9px; border-radius: 8px 8px 0 0;">                 <h3 style="margin: 0; text-align: center;">👤 انس</h3>             </div>                          <div style="padding: 8px;">                 <p style="margin: 5px 0;"><strong>📍 الموقع:</strong> نقطة الانطلاق</p>                 <p style="margin: 5px 0;"><strong>⏰ الوقت:</strong> 10:22</p>                 <p style="margin: 5px 0;"><strong>🌤️ الطقس:</strong> مطر خفيف 🌧️ (22°C)</p>                                  <hr style="margin: 10px 0; border: 1px solid #eee;">                                  <div style="background: #f8f9fa; padding: 8px; border-radius: 5px; margin: 8px 0;">                     <p style="margin: 3px 0; font-size: 12px;"><strong>📊 معلومات الرحلة:</strong></p>                     <p style="margin: 3px 0; font-size: 12px;">🛣️ المسافة: 10.3 كم</p>                     <p style="margin: 3px 0; font-size: 12px;">💰 التكلفة المتوقعة: 9.76 د.أ</p>                 </div>                                  <div style="text-align: center; background: #e3f2fd; padding: 6px; border-radius: 5px; margin-top: 8px;">                     <span style="color: #1976d2; font-weight: bold;">🔵 في انتظار السائق</span>                 </div>             </div>         </div>         </div>`)[0];
+                popup_b273525822c184555423169de4c9090f.setContent(html_1806f8dcdaa84b3463187967a90613a3);
+            
+        
+
+        marker_3c52e583b887f082d9d5e308f7cc31b0.bindPopup(popup_b273525822c184555423169de4c9090f)
+        ;
+
+        
+    
+    
+            marker_3c52e583b887f082d9d5e308f7cc31b0.bindTooltip(
+                `<div>
+                     📍 انس - نقطة الانطلاق
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3c52e583b887f082d9d5e308f7cc31b0.setIcon(icon_f43896b5bca1f63ad04449388bfa8fb1);
+            
+    
+            var marker_32ad08b8cd3590d21ee34bf070b5b666 = L.marker(
+                [32.5577912, 35.8480309],
+                {
+}
+            ).addTo(map_d1c70f3f4a5ad8fed4f51af0c7f70592);
+        
+    
+            var icon_2687ebedaf72e609ddab87883a67cdeb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "car",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9c18661682faef8eabe24c4fa8f64e63 = L.popup({
+  "maxWidth": 340,
+});
+
+        
+            
+                var html_d7632ce4f740f5fe53794b23e87b16a2 = $(`<div id="html_d7632ce4f740f5fe53794b23e87b16a2" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial; font-size: 13px; width: 320px;">             <div style="background: linear-gradient(135deg, #4CAF50, #388E3C); color: white; padding: 12px; margin: -9px -9px 10px -9px; border-radius: 8px 8px 0 0;">                 <h3 style="margin: 0; text-align: center;">🚗 ابو ثائر</h3>             </div>                          <div style="padding: 8px;">                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">                     <div style="flex: 1;">                         <p style="margin: 3px 0;"><strong>🚘 السيارة:</strong> عادية</p>                         <p style="margin: 3px 0;"><strong>📏 المسافة:</strong> 153 متر</p>                     </div>                     <div style="flex: 1;">                         <p style="margin: 3px 0;"><strong>⏱️ وقت الوصول:</strong> 0.8 دقيقة</p>                         <p style="margin: 3px 0;"><strong>🕒 سيصل الساعة:</strong> 10:23</p>                     </div>                 </div>                                  <hr style="margin: 10px 0; border: 1px solid #eee;">                                  <div style="background: #f1f8e9; padding: 8px; border-radius: 5px; margin: 8px 0;">                     <p style="margin: 3px 0; font-size: 12px;"><strong>🎯 معلومات إضافية:</strong></p>                     <p style="margin: 3px 0; font-size: 12px;">⭐ تقييم: 4.8/5</p>                     <p style="margin: 3px 0; font-size: 12px;">🚗 رقم اللوحة: ABC-123</p>                     <p style="margin: 3px 0; font-size: 12px;">📱 رقم الهاتف: 079-XXX-XXXX</p>                 </div>                                  <div style="text-align: center; background: #e8f5e8; padding: 8px; border-radius: 5px; margin-top: 8px;">                     <span style="color: #2e7d32; font-weight: bold;">🟢 في الطريق إليك</span>                 </div>             </div>         </div>         </div>`)[0];
+                popup_9c18661682faef8eabe24c4fa8f64e63.setContent(html_d7632ce4f740f5fe53794b23e87b16a2);
+            
+        
+
+        marker_32ad08b8cd3590d21ee34bf070b5b666.bindPopup(popup_9c18661682faef8eabe24c4fa8f64e63)
+        ;
+
+        
+    
+    
+            marker_32ad08b8cd3590d21ee34bf070b5b666.bindTooltip(
+                `<div>
+                     🚗 ابو ثائر - عادية (153م)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_32ad08b8cd3590d21ee34bf070b5b666.setIcon(icon_2687ebedaf72e609ddab87883a67cdeb);
+            
+    
+            var marker_f05e2c6fce98252ce8a4ee540d401f3d = L.marker(
+                [32.6436602, 35.8859533],
+                {
+}
+            ).addTo(map_d1c70f3f4a5ad8fed4f51af0c7f70592);
+        
+    
+            var icon_4442b9531c8958da2eda8e2c11f9668c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "flag-checkered",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3759955dde70b234174c6dd2df5db290 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_357b7f24127d2b7ef6a75552ee3925f6 = $(`<div id="html_357b7f24127d2b7ef6a75552ee3925f6" style="width: 100.0%; height: 100.0%;">         <div style="font-family: 'Segoe UI', Arial; font-size: 13px; width: 280px;">             <div style="background: linear-gradient(135deg, #F44336, #D32F2F); color: white; padding: 12px; margin: -9px -9px 10px -9px; border-radius: 8px 8px 0 0;">                 <h3 style="margin: 0; text-align: center;">🎯 الوجهة</h3>             </div>                          <div style="padding: 8px;">                 <p style="margin: 5px 0;"><strong>📍 الموقع:</strong> نقطة الوصول</p>                 <p style="margin: 5px 0;"><strong>🛣️ المسافة من البداية:</strong> 10.3 كم</p>                 <p style="margin: 5px 0;"><strong>⏱️ وقت الرحلة المتوقع:</strong> 30 دقيقة</p>                                  <hr style="margin: 10px 0; border: 1px solid #eee;">                                  <div style="background: #ffebee; padding: 8px; border-radius: 5px; margin: 8px 0;">                     <p style="margin: 3px 0; font-size: 12px;"><strong>💰 تفاصيل التكلفة:</strong></p>                     <p style="margin: 3px 0; font-size: 12px;">🚗 نوع السيارة: عادية</p>                     <p style="margin: 3px 0; font-size: 12px;">💵 التكلفة المتوقعة: 9.76 د.أ</p>                 </div>                                  <div style="text-align: center; background: #ffcdd2; padding: 6px; border-radius: 5px; margin-top: 8px;">                     <span style="color: #c62828; font-weight: bold;">🏁 هدف الرحلة</span>                 </div>             </div>         </div>         </div>`)[0];
+                popup_3759955dde70b234174c6dd2df5db290.setContent(html_357b7f24127d2b7ef6a75552ee3925f6);
+            
+        
+
+        marker_f05e2c6fce98252ce8a4ee540d401f3d.bindPopup(popup_3759955dde70b234174c6dd2df5db290)
+        ;
+
+        
+    
+    
+            marker_f05e2c6fce98252ce8a4ee540d401f3d.bindTooltip(
+                `<div>
+                     🎯 الوجهة - 10.3 كم
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f05e2c6fce98252ce8a4ee540d401f3d.setIcon(icon_4442b9531c8958da2eda8e2c11f9668c);
+            
+    
+            var poly_line_8dc7cd0fe96cf4d296a4754999b8dfbd = L.polyline(
+                [[32.55778, 35.84831], [32.55809, 35.84833], [32.55812, 35.84793], [32.55814, 35.84772], [32.55772, 35.84765], [32.55746, 35.84767], [32.55744, 35.84727], [32.55741, 35.8466], [32.55742, 35.84599], [32.55739, 35.84586], [32.55742, 35.84569], [32.5576, 35.84518], [32.5577, 35.84481], [32.55759, 35.84482], [32.55708, 35.84483], [32.55701, 35.84521], [32.5569, 35.84602], [32.55676, 35.84683], [32.55681, 35.84688]],
+                {"bubblingMouseEvents": true, "color": "#FF6600", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#FF6600", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_d1c70f3f4a5ad8fed4f51af0c7f70592);
+        
+    
+            poly_line_8dc7cd0fe96cf4d296a4754999b8dfbd.bindTooltip(
+                `<div>
+                     🚗 مسار السائق إليك
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            ant_path_b60b28df589ec9bcda0885d1d96597f1 = L.polyline.antPath(
+              [[32.55778, 35.84831], [32.55809, 35.84833], [32.55812, 35.84793], [32.55814, 35.84772], [32.55772, 35.84765], [32.55746, 35.84767], [32.55744, 35.84727], [32.55741, 35.8466], [32.55742, 35.84599], [32.55739, 35.84586], [32.55742, 35.84569], [32.5576, 35.84518], [32.5577, 35.84481], [32.55759, 35.84482], [32.55708, 35.84483], [32.55701, 35.84521], [32.5569, 35.84602], [32.55676, 35.84683], [32.55681, 35.84688]],
+              {
+  "stroke": true,
+  "color": "#FF3300",
+  "weight": 2,
+  "opacity": 0.7,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": [
+10,
+5,
+],
+  "dashOffset": null,
+  "fill": false,
+  "fillColor": "#FF3300",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "smoothFactor": 1.0,
+  "noClip": false,
+  "paused": false,
+  "reverse": false,
+  "hardwareAcceleration": false,
+  "delay": 1000,
+  "pulseColor": "#FF0000",
+}
+        ).addTo(map_d1c70f3f4a5ad8fed4f51af0c7f70592);
+        
+    
+            var poly_line_8c317982dc6c58045c52bdd846819566 = L.polyline(
+                [[32.55681, 35.84688], [32.55684, 35.8469], [32.55697, 35.8467], [32.55728, 35.84617], [32.55736, 35.84604], [32.55758, 35.84586], [32.55771, 35.84577], [32.55791, 35.84568], [32.55807, 35.84565], [32.55821, 35.84565], [32.55875, 35.84568], [32.5587, 35.84519], [32.55868, 35.84509], [32.559, 35.8449], [32.5591, 35.84484], [32.55949, 35.8446], [32.55991, 35.84433], [32.5606, 35.84394], [32.56154, 35.84354], [32.5622, 35.84338], [32.56371, 35.84312], [32.56457, 35.843], [32.5648, 35.84302], [32.5648, 35.84303], [32.5648, 35.84305], [32.56482, 35.84308], [32.56487, 35.84312], [32.56492, 35.84312], [32.56497, 35.84309], [32.56501, 35.84304], [32.56501, 35.843], [32.56527, 35.8429], [32.56537, 35.84287], [32.56601, 35.84279], [32.56748, 35.8426], [32.56845, 35.84246], [32.56857, 35.84247], [32.56869, 35.8425], [32.56886, 35.84255], [32.56892, 35.8426], [32.56898, 35.84263], [32.5691, 35.84279], [32.5692, 35.84299], [32.56957, 35.84415], [32.56978, 35.84486], [32.56991, 35.84522], [32.57008, 35.84579], [32.57023, 35.84647], [32.57075, 35.84874], [32.57104, 35.84986], [32.57112, 35.85015], [32.57124, 35.85042], [32.57152, 35.85097], [32.57151, 35.85099], [32.57152, 35.85105], [32.57154, 35.8511], [32.57158, 35.85114], [32.57161, 35.85114], [32.57164, 35.85115], [32.57166, 35.85114], [32.57176, 35.85125], [32.57258, 35.85238], [32.57287, 35.85281], [32.57295, 35.85297], [32.57295, 35.853], [32.57296, 35.85307], [32.57298, 35.85312], [32.57302, 35.85317], [32.57305, 35.85318], [32.5734, 35.85394], [32.57366, 35.85453], [32.57371, 35.85471], [32.57387, 35.85584], [32.57403, 35.85716], [32.57405, 35.85732], [32.57413, 35.8576], [32.57434, 35.85808], [32.57444, 35.85839], [32.57481, 35.859], [32.57525, 35.85985], [32.57572, 35.86079], [32.57608, 35.86147], [32.57677, 35.8627], [32.57695, 35.86302], [32.57758, 35.86391], [32.57846, 35.86524], [32.57891, 35.86588], [32.57898, 35.86607], [32.57904, 35.86625], [32.57901, 35.86629], [32.57893, 35.86641], [32.57892, 35.86647], [32.57891, 35.86656], [32.57892, 35.8667], [32.57897, 35.86682], [32.57924, 35.86703], [32.57934, 35.86709], [32.57998, 35.86783], [32.58017, 35.86808], [32.58027, 35.86819], [32.5805, 35.86838], [32.58078, 35.86872], [32.58108, 35.86906], [32.58141, 35.86952], [32.58142, 35.86956], [32.58146, 35.8697], [32.58158, 35.86981], [32.58169, 35.86985], [32.58191, 35.86992], [32.58222, 35.87016], [32.58399, 35.87194], [32.5848, 35.87278], [32.58549, 35.87345], [32.58573, 35.87374], [32.58588, 35.87395], [32.58616, 35.87448], [32.58637, 35.87499], [32.58656, 35.87568], [32.58655, 35.87569], [32.58654, 35.87571], [32.58652, 35.87575], [32.58653, 35.87584], [32.58659, 35.8759], [32.58663, 35.87591], [32.58678, 35.87627], [32.58695, 35.8767], [32.58717, 35.87706], [32.58747, 35.87739], [32.58808, 35.87801], [32.58857, 35.8785], [32.58872, 35.87866], [32.58878, 35.87869], [32.58878, 35.8787], [32.58878, 35.87871], [32.58879, 35.87872], [32.5888, 35.87875], [32.58882, 35.87877], [32.58886, 35.87879], [32.58888, 35.87879], [32.58893, 35.87877], [32.58907, 35.87876], [32.58965, 35.8789], [32.58979, 35.87891], [32.59067, 35.87915], [32.59146, 35.87935], [32.59203, 35.87954], [32.59254, 35.87985], [32.59308, 35.88028], [32.5942, 35.88117], [32.59447, 35.88137], [32.59466, 35.88157], [32.59496, 35.882], [32.5962, 35.8839], [32.59654, 35.88438], [32.59661, 35.88454], [32.59723, 35.88549], [32.59802, 35.88671], [32.59825, 35.88698], [32.59846, 35.88716], [32.59862, 35.88727], [32.59901, 35.88741], [32.59993, 35.88769], [32.60114, 35.88809], [32.60128, 35.88814], [32.60131, 35.88818], [32.60149, 35.88826], [32.60156, 35.88827], [32.60162, 35.88823], [32.60164, 35.88814], [32.6019, 35.88798], [32.6031, 35.88796], [32.60376, 35.88793], [32.60493, 35.8879], [32.60629, 35.88785], [32.60817, 35.88777], [32.60925, 35.88774], [32.6096, 35.88777], [32.60997, 35.88785], [32.61073, 35.88814], [32.61133, 35.88845], [32.61152, 35.88859], [32.61202, 35.8891], [32.61266, 35.88986], [32.61265, 35.88987], [32.61263, 35.8899], [32.61263, 35.88995], [32.61265, 35.89001], [32.6127, 35.89004], [32.61275, 35.89003], [32.61279, 35.88999], [32.6128, 35.88996], [32.61287, 35.88998], [32.61292, 35.88996], [32.61316, 35.88983], [32.61405, 35.88965], [32.61463, 35.88952], [32.61488, 35.88944], [32.61501, 35.88938], [32.61528, 35.88918], [32.61627, 35.88816], [32.61737, 35.88698], [32.61841, 35.88581], [32.61873, 35.8855], [32.61936, 35.88506], [32.62009, 35.88454], [32.62034, 35.88434], [32.62132, 35.88353], [32.62307, 35.88206], [32.62339, 35.88184], [32.6238, 35.88158], [32.62471, 35.88098], [32.62538, 35.8806], [32.6258, 35.88043], [32.62589, 35.8804], [32.62633, 35.88033], [32.62672, 35.88032], [32.62762, 35.8802], [32.62816, 35.88011], [32.62887, 35.88003], [32.62929, 35.87998], [32.62967, 35.87992], [32.62985, 35.87983], [32.63019, 35.8796], [32.63038, 35.87948], [32.63063, 35.8794], [32.63072, 35.87934], [32.63145, 35.87917], [32.63265, 35.87891], [32.63451, 35.87849], [32.63488, 35.87839], [32.63536, 35.87828], [32.63575, 35.87822], [32.63704, 35.87793], [32.63755, 35.87783], [32.63767, 35.87747], [32.63792, 35.87732], [32.63879, 35.87678], [32.63943, 35.87639], [32.63973, 35.87622], [32.64023, 35.87598], [32.64092, 35.87571], [32.64162, 35.87546], [32.64184, 35.87539], [32.64196, 35.87537], [32.64257, 35.87537], [32.64285, 35.87538], [32.64305, 35.87546], [32.64324, 35.87555], [32.64358, 35.87571], [32.64362, 35.87653], [32.64364, 35.87806], [32.64368, 35.87977], [32.6437, 35.88109], [32.64368, 35.8814], [32.64344, 35.8814], [32.64328, 35.8814], [32.64327, 35.88143], [32.6433, 35.88179], [32.64339, 35.88221], [32.64346, 35.88277], [32.64362, 35.88367], [32.64373, 35.88429], [32.64376, 35.8845], [32.64382, 35.88498], [32.64395, 35.88587], [32.64367, 35.88584]],
+                {"bubblingMouseEvents": true, "color": "#9C27B0", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#9C27B0", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_d1c70f3f4a5ad8fed4f51af0c7f70592);
+        
+    
+            poly_line_8c317982dc6c58045c52bdd846819566.bindTooltip(
+                `<div>
+                     🛣️ مسار رحلتك - 10.3 كم
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_b7e21b332323df08c96c772f3b7f2698 = L.circle(
+                [32.5568095, 35.846887],
+                {"bubblingMouseEvents": true, "color": "#2196F3", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#2196F3", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 50, "stroke": true, "weight": 3}
+            ).addTo(map_d1c70f3f4a5ad8fed4f51af0c7f70592);
+        
+    
+            circle_b7e21b332323df08c96c772f3b7f2698.bindTooltip(
+                `<div>
+                     منطقة انتظار انس
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var locate_control_c2795e4a102d91f8fc116cebbce5b9a9 = L.control.locate(
+                {"drawCircle": true, "drawMarker": true, "position": "topleft", "strings": {"popup": "\u0623\u0646\u062a \u0647\u0646\u0627", "title": "\u062a\u062d\u062f\u064a\u062f \u0645\u0648\u0642\u0639\u064a"}}
+            ).addTo(map_d1c70f3f4a5ad8fed4f51af0c7f70592);
+            
+        
+    
+            L.control.fullscreen(
+                {
+  "position": "topright",
+  "title": "\u0645\u0644\u0621 \u0627\u0644\u0634\u0627\u0634\u0629",
+  "titleCancel": "\u0625\u0644\u063a\u0627\u0621 \u0645\u0644\u0621 \u0627\u0644\u0634\u0627\u0634\u0629",
+  "forceSeparateButton": false,
+}
+            ).addTo(map_d1c70f3f4a5ad8fed4f51af0c7f70592);
+        
+    
+            var measure_control_2a3e395b1a7fca064508bb10fe45425f = new L.Control.Measure(
+                {
+  "position": "bottomleft",
+  "primaryLengthUnit": "kilometers",
+  "secondaryLengthUnit": "meters",
+  "primaryAreaUnit": "sqkilometers",
+  "secondaryAreaUnit": "acres",
+});
+            map_d1c70f3f4a5ad8fed4f51af0c7f70592.addControl(measure_control_2a3e395b1a7fca064508bb10fe45425f);
+
+            // Workaround for using this plugin with Leaflet>=1.8.0
+            // https://github.com/ljagis/leaflet-measure/issues/171
+            L.Control.Measure.include({
+                _setCaptureMarkerIcon: function () {
+                    // disable autopan
+                    this._captureMarker.options.autoPanOnFocus = false;
+                    // default function
+                    this._captureMarker.setIcon(
+                        L.divIcon({
+                            iconSize: this._map.getSize().multiplyBy(2)
+                        })
+                    );
+                },
+            });
+
+        
+    
+            var tile_layer_a97b0aaded8a48a13c455abd4a8c580f = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detect_retina": false, "max_native_zoom": 19, "max_zoom": 19, "min_zoom": 0, "no_wrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+            var mini_map_038ee9b4cb598324b2a7a19ebc82bd33 = new L.Control.MiniMap(
+                tile_layer_a97b0aaded8a48a13c455abd4a8c580f,
+                {
+  "position": "bottomright",
+  "width": 120,
+  "height": 120,
+  "collapsedWidth": 25,
+  "collapsedHeight": 25,
+  "zoomLevelOffset": -5,
+  "centerFixed": false,
+  "zoomAnimation": false,
+  "toggleDisplay": true,
+  "autoToggleDisplay": false,
+  "minimized": false,
+}
+            );
+            map_d1c70f3f4a5ad8fed4f51af0c7f70592.addControl(mini_map_038ee9b4cb598324b2a7a19ebc82bd33);
+        
+    
+            var layer_control_47c6e9d03ab7d15cad114d6364241a79_layers = {
+                base_layers : {
+                    "\ud83d\uddfa\ufe0f \u0639\u0627\u062f\u064a\u0629" : tile_layer_9084920513a6ce6ef0e01142390dd1a6,
+                    "\ud83d\udef0\ufe0f \u0623\u0642\u0645\u0627\u0631 \u0635\u0646\u0627\u0639\u064a\u0629" : tile_layer_f1791c81610392f170e4e885eba4753f,
+                    "\ud83c\udfd4\ufe0f \u062a\u0636\u0627\u0631\u064a\u0633" : tile_layer_d4ad046e5c0a425833aa08ffac9d88eb,
+                    "\ud83c\udf19 \u0644\u064a\u0644\u064a" : tile_layer_86669c0b655bf36babc17c7fb5427fad,
+                },
+                overlays :  {
+                },
+            };
+            let layer_control_47c6e9d03ab7d15cad114d6364241a79 = L.control.layers(
+                layer_control_47c6e9d03ab7d15cad114d6364241a79_layers.base_layers,
+                layer_control_47c6e9d03ab7d15cad114d6364241a79_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_d1c70f3f4a5ad8fed4f51af0c7f70592);
+
+        
+</script>
+</html>
